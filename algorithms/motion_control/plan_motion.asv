@@ -31,6 +31,7 @@ function [public_vars] = plan_motion(read_only_vars, public_vars)
     target = get_target(public_vars.estimated_pose, public_vars.path);
     
     % II. Compute motion vector
+    %% Week 3 - Task 3 – Motion control
 
     %% Week 3 - Task 2 – Create a path
 
@@ -86,22 +87,20 @@ function [public_vars] = plan_motion(read_only_vars, public_vars)
      9 9];
     
     % In this moment, path is already defined
-
-    %% Week 3 - Task 3 – Motion control
-
+    
     % Robot position
     x_robot = read_only_vars.mocap_pose(1);
     y_robot = read_only_vars.mocap_pose(2);
     theta_robot = read_only_vars.mocap_pose(3); % Orientation in radians
-
-    lookahead_distance = 1.5; % Lookahead distance
-
-    % Setup
+    
+    lookahead_distance = 1.5; % Lookahead distance (adjust for performance)
+    
     if read_only_vars.counter == 1
         public_vars.min_index = 1;
     end
-
+    
     path_size = size(public_vars.path, 1);
+    current_index = public_vars.min_index; % Skipping visited points
 
     % Find closest point to the robot
     for current_index = public_vars.min_index : path_size
@@ -109,7 +108,7 @@ function [public_vars] = plan_motion(read_only_vars, public_vars)
         public_vars.dx = public_vars.path(current_index, 1) - x_robot;
         public_vars.dy = public_vars.path(current_index, 2) - y_robot;
         dist = sqrt(public_vars.dx^2 + public_vars.dy^2);
-
+        
         % Point with max dist but less than lookahead_distance. 
         % Using the last
         if dist < lookahead_distance
@@ -118,22 +117,22 @@ function [public_vars] = plan_motion(read_only_vars, public_vars)
            if current_index + 1 ~= path_size + 1
                 public_vars.min_index = current_index + 1;
            end
-
+           
            % Saving dx and dy of points
            public_vars.correct_dx = public_vars.path(current_index, 1) - x_robot;
            public_vars.correct_dy = public_vars.path(current_index, 2) - y_robot;
         end
     end
-
+    
     % Calculate the angle to the lookahead point
     alpha = atan2(public_vars.correct_dy, public_vars.correct_dx) - theta_robot;
-
+    
     % Calculate the steering angle
-    delta = atan2(2 * lookahead_distance * sin(alpha), dist);   % Steering angle
-
-    WB = read_only_vars.agent_drive.interwheel_dist;            % Distance between the wheels - wheelbase
-    v = 0.3;                                    % Desired linear velocity
-
+    delta = atan2(2 * lookahead_distance * sin(alpha), dist);  % Steering angle
+    
+    WB = 0.2;                                   % Distance between the wheels - wheelbase
+    v = 0.9;                                    % Desired linear velocity
+    
     % Compute the angular velocity based on the steering angle
     omega = (v * tan(delta)) / WB;              % Angular velocity [rad/s]
 
