@@ -26,9 +26,9 @@ public_vars = plan_motion(read_only_vars, public_vars);
 
 %% Week 2 - Task 2 – Sensor uncertainty
 
-% public_vars.sigma_vals(read_only_vars.counter, 1:8) = read_only_vars.lidar_distances(1, :);   % Setting sigma
-% public_vars.sigma_vals(read_only_vars.counter, 9:10) = read_only_vars.gnss_position(1, :);
-% 
+public_vars.sigma_vals(read_only_vars.counter, 1:8) = read_only_vars.lidar_distances(1, :);   % Setting sigma
+public_vars.sigma_vals(read_only_vars.counter, 9:10) = read_only_vars.gnss_position(1, :);
+
 % if (read_only_vars.counter == 200)
 %     % If variable read_only_vars.counter has a wanted value
 %     fprintf('Variable read_only_vars.counter has a value %d\n', read_only_vars.counter);
@@ -124,5 +124,11 @@ public_vars = plan_motion(read_only_vars, public_vars);
 %     legend('1st LiDAR channel', 'X GNSS axis');
 %     grid on;
 % end
+
+%intersections = ray_cast([2 8.5], read_only_vars.map.walls, 0)
+
+
+
+
 
 
