@@ -17,8 +17,8 @@ function [new_pose] = predict_pose(old_pose, motion_vector, read_only_vars)
     dt = read_only_vars.sampling_period; % Time step
     % Update pose using the motion model
     theta_new = theta + w * dt;
-    x_new = x + v * cos(theta_new) * dt;
-    y_new = y + v * sin(theta_new) * dt;
+    x_new = x + v * cos(theta) * dt;
+    y_new = y + v * sin(theta) * dt;
     
     % Add noise to the updated pose
     noise_v_w = [0.05 0.05 0.01];

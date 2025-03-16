@@ -127,6 +127,40 @@ public_vars.sigma_vals(read_only_vars.counter, 9:10) = read_only_vars.gnss_posit
 
 %intersections = ray_cast([2 8.5], read_only_vars.map.walls, 0)
 
+%% Week 5 - Task 1 – Preparation
+
+    % Standard deviations GNSS channels from one of the previous assignments
+    sigma_GNSS_x = 0.485;
+    sigma_GNSS_y = 0.507;
+    
+    % GNSS samples
+    gnss_data = [0.944093693072098 1.502972670403505; 
+                 2.132131458121698 2.217480150624847; 
+                 1.376864828275910 2.302875803616523; 
+                 2.095313290646735 1.822534483283383;
+                 2.331106855594518 2.446641689937425;
+                 2.566858412053019 1.451315673994478;
+                 2.291246625424902 2.246271676708273;
+                 2.726362860864620 1.664421529245411;
+                 1.865923682827822 1.446293577405589
+                 1.816826489683763 1.678323977575767];
+    
+    % Mean for both of the GNSS channels
+    public_vars.mean_x = mean(gnss_data(:,1)); % 
+    public_vars.mean_y = mean(gnss_data(:,2)); % 
+    
+    % Covariance
+    N = size(gnss_data, 1);
+    cov_xy = sum((gnss_data(:, 1) - public_vars.mean_x) .* (gnss_data(:, 2) - public_vars.mean_y)) / (N - 1);
+
+    % Covariance matrix 
+    public_vars.cov_matrix = [sigma_GNSS_x ^ 2 cov_xy;
+                              cov_xy sigma_GNSS_y ^ 2];
+
+end
+
+
+
 
 
 
