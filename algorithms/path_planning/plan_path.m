@@ -8,7 +8,6 @@ if planning_required
     path = astar(read_only_vars, public_vars);
     
     path = smooth_path(path);
-    
 else
     
     path = public_vars.path;

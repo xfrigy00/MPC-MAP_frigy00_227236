@@ -127,7 +127,7 @@ public_vars.sigma_vals(read_only_vars.counter, 9:10) = read_only_vars.gnss_posit
 
 %intersections = ray_cast([2 8.5], read_only_vars.map.walls, 0)
 
-%% Week 5 - Task 1 – Preparation
+    %% Week 5 - Task 1 – Preparation
 
     % Standard deviations GNSS channels from one of the previous assignments
     sigma_GNSS_x = 0.485;
@@ -156,6 +156,11 @@ public_vars.sigma_vals(read_only_vars.counter, 9:10) = read_only_vars.gnss_posit
     % Covariance matrix 
     public_vars.cov_matrix = [sigma_GNSS_x ^ 2 cov_xy;
                               cov_xy sigma_GNSS_y ^ 2];
+
+    %% Week 6 - Path Planning
+    
+    
+
 
 end
 
