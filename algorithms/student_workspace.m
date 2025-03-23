@@ -157,11 +157,6 @@ public_vars.sigma_vals(read_only_vars.counter, 9:10) = read_only_vars.gnss_posit
     public_vars.cov_matrix = [sigma_GNSS_x ^ 2 cov_xy;
                               cov_xy sigma_GNSS_y ^ 2];
 
-    %% Week 6 - Path Planning
-    
-    
-
-
 end
 
 
